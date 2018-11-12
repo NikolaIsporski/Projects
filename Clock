@@ -1,0 +1,48 @@
+float secArrowL = 200 ;
+float minArrowL = 150 ;
+float hourArrowL = 100;
+PImage clock;
+
+void setup(){
+  size(600,600);
+  clock = loadImage("clock.jpg");
+}
+
+
+void draw(){
+  clock = loadImage("clock.jpg");
+  noFill();
+  strokeWeight(7);
+  stroke(0,0,0);
+  image(clock, 0 , 0, width, height);
+  ellipse(width/2,height/2,width-10,height-10);
+  
+  float alphaSec = radians(second() * 360 / 60) - PI / 2;
+  float xSec = secArrowL * cos (alphaSec) + width/2;
+  float ySec = secArrowL * sin(alphaSec) + height/2;
+  
+  line(width/2,height/2,xSec,ySec);
+  println(hour());
+  
+  
+  float alphaMin = radians(minute() * 360 / 60) - PI / 2;
+  float xMin = minArrowL * cos (alphaMin) + width/2;
+  float yMin = minArrowL * sin(alphaMin) + height/2;
+  
+  line(width/2,height/2,xMin,yMin);
+  
+  
+  float alphaHour = radians((hour() % 12) * 360 / 12) - PI / 2;
+  float xHour = hourArrowL * cos (alphaHour) + width/2;
+  float yHour = hourArrowL * sin(alphaHour) + height/2;
+  
+  line(width/2,height/2,xHour,yHour);
+  
+  
+  
+  
+  
+  
+  
+  
+}
