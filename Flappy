@@ -1,0 +1,86 @@
+float xr = width;
+float yr = 0;
+float wr = 30;
+float hrup = 100;
+float hrdown = 100;
+float xspeed = 5;
+float birdx = 100;
+float birdy = 300;
+float birdw = 50;
+float birdh = 50;
+PImage bird;
+int score = 0;
+boolean gameOver = false;
+
+void setup(){
+  size(600,600);
+  bird = loadImage("bird.jpg");
+  xr = width;
+}
+
+
+void draw(){
+  background(#2C88F5);
+  if(xr < -wr){
+    score++;
+    xr = width;
+    hrup = random(200,280);
+    hrdown = random(200,280);
+  }
+  if (keyPressed && key == ' '){
+    birdy--;
+  } else{
+   birdy++;
+  }
+  image(bird,birdx,birdy,birdw,birdh);
+  fill(#2CF563);
+  rect(xr,yr,wr,hrup);
+  fill(#2CF563);
+  rect(xr,height-hrdown,wr,hrdown);
+  xr -= xspeed;
+ 
+ boolean collisionUp = (birdx + birdw) > xr && (birdy < hrup) && (xr - wr) < birdx;
+  println(collisionUp);
+  if(collisionUp){
+    //background(0,0,0);
+    textSize(32);
+    fill(255,255,255);
+    text(score,100,100);
+  }
+  text(score,500,100);
+  textSize(18);
+    
+  boolean collisionDown = (xr+wr>birdx) && (xr<birdw+birdx) && (birdy+birdh>height-hrdown);
+  println(collisionDown);
+  if(collisionDown){
+   // background(0,0,0);
+    textSize(32);
+    fill(255,255,255);
+    text(score,100,100);
+  }
+  text(score,500,100);
+  textSize(18);
+
+  
+ if (gameOver){
+     print("Gameover" + gameOver);
+
+    background(0);
+     textSize(20);
+    text("GameOver",250,300);
+    
+    if(keyPressed && key == 'r'){
+      gameOver = false;
+      score = 0;
+      birdx = 300;
+    } 
+    } else {
+      gameOver = collisionUp || collisionDown;
+       print("Game Over" + gameOver);
+      
+    }
+    
+  }
+
+    
+ 
