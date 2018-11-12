@@ -1,0 +1,42 @@
+PImage spedometer;
+float x0;
+float y0;
+float len = 150;
+float kmh = 100;
+
+void setup(){
+  size(600,600);
+  spedometer = loadImage("spedometer.jpg");
+  x0 = 295;
+  y0 = 355;
+  
+}
+
+
+void draw(){
+  image(spedometer,0,0,width,height);
+  
+  stroke(#FF0000);
+  strokeWeight(3);
+ 
+  if(keyPressed){
+    kmh++;
+  } else{
+    kmh--;
+  }
+  if(kmh < 0){
+    kmh = 0;
+  }
+  if(kmh > 100){
+    kmh = 100;
+  }
+  
+  
+  float angle = radians(( kmh * 230 / 100)+ 155);
+  float x1 = len * cos(angle) + x0;
+  float y1 = len * sin(angle) + y0;
+  
+  line(x0,y0,x1,y1);
+  //println("X" + mouseX + "Y" + mouseY);
+  
+}
