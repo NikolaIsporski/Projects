@@ -1,0 +1,117 @@
+int x = 0;
+int y = 850;
+int xspeed = 8;
+PImage Desert;
+
+int enemyX = 0;
+int enemyY = 100;
+int enemyW = 50;
+int enemyX1 = 50;
+int enemyY1 = 150;
+int enemyW1 = 50;
+int enemyX2 = 0;
+int enemyY2 = 200;
+int enemyW2 = 50;
+int enemySpeed = 3;
+int enemySpeed1 = 5;
+int enemySpeed2 = 6;
+
+int bulletX = 0;
+int bulletY = 1000;
+int bulletW = 10;
+int bulletH = 20;
+int bulletSpeed = 10;
+
+int minHitDistance = enemyW * 2;
+int score = 0;
+
+boolean isShot = false;
+void setup(){
+  size(2000, 1000);
+  Desert = loadImage("Desert.png");
+  enemyX = int(random(0, 2000));
+  enemyX1 = int(random(0, 2000));
+  if (random(0, 10) < 5) {
+    enemySpeed = -enemySpeed;
+  }
+}
+
+void draw(){
+  background(#FFFFFF);
+  fill(255, 0, 0);
+  //image(Desert, 0, 0, 2000, 1000);
+  rect(x, y, 30, 200);
+  
+  fill(0, 0, 255);
+  rect(enemyX, enemyY, enemyW, enemyW);
+  rect(enemyX1, enemyY1, enemyW1, enemyW1);
+  rect(enemyX2, enemyY2, enemyW2, enemyW2);
+  enemyX += enemySpeed;
+  enemyX1 += enemySpeed1;
+  enemyX2 += enemySpeed2;
+  
+  fill(255, 255, 0);
+  rect(bulletX, bulletY, bulletW, bulletH);
+  enemyX += enemySpeed;
+  enemyX1 += enemySpeed1;
+  if (dist(bulletX, bulletY, enemyX, enemyY) < minHitDistance) {
+    bulletY = 1000;
+    isShot = false;
+    score++;
+    enemyX = int(random(0, 2000));
+  } else{
+    text(score,200,100);
+    text("Score",100,100);
+    textSize(25);
+  }
+  if (dist(bulletX, bulletY, enemyX1, enemyY1) < minHitDistance) {
+    bulletY = 1000;
+    isShot = false;
+    score++;
+    enemyX1 = int(random(0, 2000));
+  } else{
+    text(score,200,100);
+    text("Score",100,100);
+    textSize(25);
+  }
+  if (dist(bulletX, bulletY, enemyX2, enemyY2) < minHitDistance) {
+    bulletY = 1000;
+    isShot = false;
+    score++;
+    enemyX2 = int(random(0, 2000));
+  } else{
+    text(score,200,100);
+    text("Score",100,100);
+    textSize(25);
+  }
+    if (bulletY < 0) {
+    isShot = false;
+    bulletY = 1000;
+  }
+  if (isShot) {
+    bulletY -= bulletSpeed;
+  }
+  if (enemyX > 2000 || enemyX < 0) {
+    enemySpeed = -enemySpeed;
+  }
+    if (enemyX1 > 2000 || enemyX1 < 0) {
+    enemySpeed1 = -enemySpeed1;
+  }
+  if (enemyX2 > 2000 || enemyX2 < 0) {
+    enemySpeed2 = -enemySpeed2;
+  }
+  
+  if (keyPressed){
+    if (keyCode == RIGHT){
+      x = x + xspeed;
+    }
+    if (keyCode == LEFT){
+      x = x - xspeed;
+    }
+    if (key == ' ' && !isShot) {
+      bulletX = x;
+      bulletY = y;
+      isShot = true;
+    }
+  }
+}
